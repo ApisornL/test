@@ -9,3 +9,11 @@ jobs:
       - run:
           name: Print the Current Time
           command: date
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - run:
+          name: build and push to docker
+          command: |
+            cp Dockerfile.production Dockerfile .
+            docker build -t heriot/learning-devops-demo1 .
+            docker push heriot/learning-devops-demo1
+            date
