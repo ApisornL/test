@@ -1,12 +1,14 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/node:8.11.1-stretch
-    step:
-      - checkout
-  test:
-    docker:
-      - image: circleci/node:8.11.1-stretch
-    step:
-      - checkout
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build
+      - test1:
+          requires:
+            - build
+      - test2:
+          requires:
+            - test1
+      - deploy:
+          requires:
+            - test2
