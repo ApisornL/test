@@ -9,6 +9,7 @@ jobs:
       - run:
           name: Print the Current Time
           command: date
+      - setup_remote_docker        
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - run:
           name: build and push to docker
