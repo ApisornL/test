@@ -1,25 +1,20 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/repo
-    step:
-      - checkout
-  test:
     docker:
-      - image: circleci/node:8.11.1-stretch
-    working_directory: ~/repo
+      - image: circleci/<language>:<version TAG>
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback 
-            - v1-dependencies-
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm test
-  ship:
-  deploy:
+      - run: <command>
+  test:
+    docker:
+      - image: circleci/<language>:<version TAG>
+    steps:
+      - checkout
+      - run: <command>
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test
